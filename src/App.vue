@@ -1,27 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <el-container>
+    <el-header>
+      <el-menu mode="horizontal" :default-active="topMenuIndex">
+        <el-menu-item index="1">注册申请</el-menu-item>
+        <el-menu-item index="2">申请记录</el-menu-item>
+        <el-menu-item index="3">管理员后台</el-menu-item>
+      </el-menu>
+    </el-header>
+    <el-main> Main </el-main>
+  </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  }
-})
+  setup() {
+    const topMenuIndex = ref<string>('1');
+    return { topMenuIndex };
+  },
+});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
