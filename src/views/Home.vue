@@ -65,7 +65,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="10">
-          <el-form-item label="开发意向" prop="doDev">
+          <el-form-item label="参与开发" prop="doDev">
             <el-switch v-model="mainForm.doDev"></el-switch>
           </el-form-item>
         </el-col>

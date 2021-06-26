@@ -4,7 +4,7 @@
       <el-menu mode="horizontal" :default-active="$route.path" router>
         <el-menu-item index="/">注册申请</el-menu-item>
         <el-menu-item index="/inquiry">申请查询</el-menu-item>
-        <el-menu-item index="/admin">管理员后台</el-menu-item>
+        <el-menu-item index="/members">全部成员</el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
