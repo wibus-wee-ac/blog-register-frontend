@@ -4,13 +4,19 @@
       <span>登记处</span>
     </template>
     <el-form :model="mainForm">
-      <el-form-item label="昵称" prop="name">
-        <el-input v-model="mainForm.name"></el-input>
-      </el-form-item>
-      <el-form-item label="性别" prop="sex">
-        <el-radio v-model="mainForm.sex" label="false">男</el-radio>
-        <el-radio v-model="mainForm.sex" label="true">女</el-radio>
-      </el-form-item>
+      <el-row :gutter="10">
+        <el-col :span="20">
+          <el-form-item label="昵称" prop="name">
+            <el-input v-model="mainForm.name"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item label="性别" prop="sex">
+            <el-radio v-model="mainForm.sex" label="false">男</el-radio>
+            <el-radio v-model="mainForm.sex" label="true">女</el-radio>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row :gutter="10">
         <el-col :span="6">
           <el-form-item label="博客名" prop="blogName">
