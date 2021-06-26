@@ -49,7 +49,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="年级" prop="grade">
-            <el-select v-model="mainForm.grade" placeholder="请选择">
+            <el-select v-model="mainForm.grade" placeholder="请选择" :disabled="!gradeAvailable">
               <el-option :value="0" label="初一"> </el-option>
               <el-option :value="1" label="初二"> </el-option>
               <el-option :value="2" label="初三"> </el-option>
@@ -70,18 +70,20 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="10">
-        <el-col :span="6">
-          <el-form-item label="Github用户名" prop="github">
-            <el-input v-model="mainForm.github"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="18">
-          <el-form-item label="技术栈" prop="devStack">
-            <el-input v-model="mainForm.devStack" placeholder="例如: python , php , javascript , c++ , java..."></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-collapse-transition>
+        <el-row :gutter="10" v-show="mainForm.doDev">
+          <el-col :span="6">
+            <el-form-item label="Github用户名" prop="github">
+              <el-input v-model="mainForm.github"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="18">
+            <el-form-item label="技术栈" prop="devStack">
+              <el-input v-model="mainForm.devStack" placeholder="例如: python , php , javascript , c++ , java..."></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-collapse-transition>
       <el-row>
         <el-col :span="14" :offset="10">
           <el-form-item>
@@ -94,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 
 interface Form {
   name: string;
@@ -126,7 +128,20 @@ export default defineComponent({
       github: '',
       devStack: '',
     });
-    return { mainForm };
+    const gradeAvailable = ref<boolean>(true);
+    watch(
+      () => mainForm.value.isStudent,
+      () => {
+        if (mainForm.value.isStudent) {
+          mainForm.value.grade = null;
+          gradeAvailable.value = true;
+        } else {
+          mainForm.value.grade = 10;
+          gradeAvailable.value = false;
+        }
+      }
+    );
+    return { mainForm, gradeAvailable };
   },
 });
 </script>
