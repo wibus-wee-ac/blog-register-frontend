@@ -129,6 +129,7 @@ export default defineComponent({
       devStack: '',
     });
     const gradeAvailable = ref<boolean>(true);
+    // 不是学生则 年级 改为 其他
     watch(
       () => mainForm.value.isStudent,
       () => {
