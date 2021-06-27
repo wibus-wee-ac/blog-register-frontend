@@ -1,4 +1,14 @@
 <template>
+  <el-alert title="如遇问题 , 请联系 QQ 1351083056" type="info" :closable="false" show-icon style="margin-bottom: 8px">
+  </el-alert>
+  <el-alert
+    title="请妥善保存提交成功后的回执Key以便查询审核状态"
+    type="warning"
+    :closable="false"
+    show-icon
+    style="margin-bottom: 8px"
+  >
+  </el-alert>
   <el-card class="box-card">
     <template #header>
       <span>登记处</span>
