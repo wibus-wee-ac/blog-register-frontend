@@ -103,7 +103,7 @@
       </el-row>
     </el-form>
   </el-card>
-  <el-dialog title="提交成功" v-model="dialog.visible" width="30%" :before-close="() => (dialog.visible = false)">
+  <el-dialog title="提交成功" v-model="dialog.visible" width="30%" :before-close="reloadPage">
     <span>您的回执Key是</span>
     <span style="font-weight: bolder">{{ dialog.content }}</span>
     <br />
@@ -111,7 +111,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="copyReceiptKey" :disabled="copyButton.disabled">{{ copyButton.content }}</el-button>
-        <el-button type="primary" @click="dialog.visible = false">关闭</el-button>
+        <el-button type="primary" @click="reloadPage">确定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -210,7 +210,11 @@ export default defineComponent({
       copyButton.value.content = '已复制';
       copyButton.value.disabled = true;
     };
-    return { mainForm, gradeAvailable, onSubmit, dialog, copyButton, copyReceiptKey };
+    // 关闭弹窗刷新页面
+    const reloadPage = () => {
+      location.reload();
+    };
+    return { mainForm, gradeAvailable, onSubmit, dialog, copyButton, copyReceiptKey, reloadPage };
   },
 });
 </script>
