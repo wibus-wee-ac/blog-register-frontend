@@ -87,7 +87,7 @@
       <el-row>
         <el-col :span="14" :offset="10">
           <el-form-item>
-            <el-button type="primary" @click="submit">提交</el-button>
+            <el-button type="primary" @click="onSubmit">提交</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -97,6 +97,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
+import { sendMainForm } from '../api';
 
 interface Form {
   name: string;
@@ -142,7 +143,25 @@ export default defineComponent({
         }
       }
     );
-    return { mainForm, gradeAvailable };
+    const onSubmit = async () => {
+      const {
+        data: { receipt_key },
+      } = await sendMainForm({
+        name: mainForm.value.name,
+        sex: mainForm.value.sex,
+        blog_name: mainForm.value.blogName,
+        blog_url: mainForm.value.blogUrl,
+        qq: mainForm.value.qq,
+        email: mainForm.value.email,
+        is_student: mainForm.value.isStudent,
+        grade: mainForm.value.grade,
+        do_dev: mainForm.value.doDev,
+        github: mainForm.value.github,
+        dev_stack: mainForm.value.devStack,
+      });
+      console.log(receipt_key);
+    };
+    return { mainForm, gradeAvailable, onSubmit };
   },
 });
 </script>
