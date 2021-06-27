@@ -93,6 +93,18 @@
       </el-row>
     </el-form>
   </el-card>
+  <el-dialog title="提交成功" v-model="dialog.visible" width="30%" :before-close="() => (dialog.visible = false)">
+    <span>您的回执Key是</span>
+    <span style="font-weight: bolder">{{ dialog.content }}</span>
+    <br />
+    <span>请妥善保存以便查询审核状态</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="copyReceiptKey" :disabled="copyButton.disabled">{{ copyButton.content }}</el-button>
+        <el-button type="primary" @click="dialog.visible = false">关闭</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -113,6 +125,16 @@ interface Form {
   devStack: string;
 }
 
+interface Dialog {
+  visible: boolean;
+  content: string;
+}
+
+interface CopyButton {
+  content: string;
+  disabled: boolean;
+}
+
 export default defineComponent({
   name: 'Home',
   setup() {
@@ -130,6 +152,14 @@ export default defineComponent({
       devStack: '',
     });
     const gradeAvailable = ref<boolean>(true);
+    const dialog = ref<Dialog>({
+      visible: false,
+      content: '',
+    });
+    const copyButton = ref<CopyButton>({
+      content: '一键复制',
+      disabled: false,
+    });
     // 不是学生则 年级 改为 其他
     watch(
       () => mainForm.value.isStudent,
@@ -143,6 +173,7 @@ export default defineComponent({
         }
       }
     );
+    // 提交表单
     const onSubmit = async () => {
       const {
         data: { receipt_key },
@@ -159,9 +190,17 @@ export default defineComponent({
         github: mainForm.value.github,
         dev_stack: mainForm.value.devStack,
       });
-      console.log(receipt_key);
+      // 显示弹窗
+      dialog.value.content = receipt_key;
+      dialog.value.visible = true;
     };
-    return { mainForm, gradeAvailable, onSubmit };
+    // 一键复制回执Key
+    const copyReceiptKey = async () => {
+      await navigator.clipboard.writeText(dialog.value.content);
+      copyButton.value.content = '已复制';
+      copyButton.value.disabled = true;
+    };
+    return { mainForm, gradeAvailable, onSubmit, dialog, copyButton, copyReceiptKey };
   },
 });
 </script>
