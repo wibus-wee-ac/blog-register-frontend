@@ -11,7 +11,7 @@
       <el-descriptions-item label="性别">
         <el-tag type="info">{{ user.sex }}</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="是否学生">
+      <el-descriptions-item label="是否学生" :span="user.isStudent ? 1 : 2">
         <el-tag type="success" v-if="user.isStudent">是</el-tag>
         <el-tag type="danger" v-else>否</el-tag>
       </el-descriptions-item>
