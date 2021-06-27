@@ -19,3 +19,5 @@ interface MainFormData {
 }
 
 export const sendMainForm = (data: MainFormData) => service.post('/user', data);
+
+export const getUserByReceipt = (key: string) => service.get(`/user/?key=${key}`);
