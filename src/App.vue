@@ -1,11 +1,13 @@
 <template>
   <el-container>
     <el-header>
-      <el-menu mode="horizontal" :default-active="$route.path" router>
-        <el-menu-item index="/">注册申请</el-menu-item>
-        <el-menu-item index="/inquiry">申请查询</el-menu-item>
-        <el-menu-item index="/members">全部成员</el-menu-item>
-      </el-menu>
+      <el-affix>
+        <el-menu mode="horizontal" :default-active="$route.path" router>
+          <el-menu-item index="/">注册申请</el-menu-item>
+          <el-menu-item index="/inquiry">申请查询</el-menu-item>
+          <el-menu-item index="/members">全部成员</el-menu-item>
+        </el-menu>
+      </el-affix>
     </el-header>
     <el-main>
       <router-view />
