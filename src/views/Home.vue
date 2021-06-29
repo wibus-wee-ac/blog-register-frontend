@@ -180,7 +180,7 @@ export default defineComponent({
     const formRules = ref<CustomRules>({
       name: [
         { required: true, message: '请输入昵称', trigger: 'blur' },
-        { min: 3, max: 15, message: '长度在3到15之间', trigger: 'blur' },
+        { max: 15, message: '长度15个字符之间', trigger: 'blur' },
       ],
       sex: { required: true, message: '请选择性别', trigger: 'blur' },
       blogName: [
@@ -198,7 +198,7 @@ export default defineComponent({
       ],
       qq: [
         { required: true, message: '请输入QQ', trigger: 'blur' },
-        { type: 'number', message: '请输入合法的QQ帐号', trigger: 'change' },
+        { pattern: /^\d{1,}$/, message: '请输入合法的QQ帐号', trigger: 'change' },
         { min: 7, max: 20, message: '长度在7到20之间', trigger: 'blur' },
       ],
       email: [
@@ -206,7 +206,7 @@ export default defineComponent({
         { type: 'email', message: '请输入合法的邮箱地址', trigger: 'change' },
         { min: 3, max: 30, message: '长度在3到30之间', trigger: 'blur' },
       ],
-      grade: { required: true, message: '请选择年级', trigger: 'blur' },
+      grade: { required: true, message: '请选择年级', trigger: 'change' },
       github: { max: 30, message: '长度在30个字符内', trigger: 'change' },
       devStack: { max: 50, message: '长度在50个字符内', trigger: 'change' },
     });
@@ -247,32 +247,29 @@ export default defineComponent({
       }
     );
     // 提交表单
-    const submitForm = async () => {
-      mainFormRef.value.validate((valid: unknown) => {
+    const submitForm = () => {
+      mainFormRef.value.validate(async (valid: unknown) => {
         if (valid) {
-          console.log('submit');
-        } else {
-          console.log('error!');
+          const {
+            data: { receipt_key },
+          } = await sendMainForm({
+            name: mainForm.value.name,
+            sex: mainForm.value.sex,
+            blog_name: mainForm.value.blogName,
+            blog_url: mainForm.value.blogUrl,
+            qq: mainForm.value.qq,
+            email: mainForm.value.email,
+            is_student: mainForm.value.isStudent,
+            grade: mainForm.value.grade,
+            do_dev: mainForm.value.doDev,
+            github: mainForm.value.github,
+            dev_stack: mainForm.value.devStack,
+          });
+          // 显示弹窗
+          dialog.value.content = receipt_key;
+          dialog.value.visible = true;
         }
       });
-      // const {
-      //   data: { receipt_key },
-      // } = await sendMainForm({
-      //   name: mainForm.value.name,
-      //   sex: mainForm.value.sex,
-      //   blog_name: mainForm.value.blogName,
-      //   blog_url: mainForm.value.blogUrl,
-      //   qq: mainForm.value.qq,
-      //   email: mainForm.value.email,
-      //   is_student: mainForm.value.isStudent,
-      //   grade: mainForm.value.grade,
-      //   do_dev: mainForm.value.doDev,
-      //   github: mainForm.value.github,
-      //   dev_stack: mainForm.value.devStack,
-      // });
-      // // 显示弹窗
-      // dialog.value.content = receipt_key;
-      // dialog.value.visible = true;
     };
     // 一键复制回执Key
     const copyReceiptKey = async () => {
