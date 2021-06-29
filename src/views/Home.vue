@@ -34,7 +34,7 @@
     <template #header>
       <span>登记处</span>
     </template>
-    <el-form :model="mainForm">
+    <el-form :model="mainForm" ref="mainFormRef" :rules="formRules">
       <el-row :gutter="10">
         <el-col :span="20">
           <el-form-item label="昵称" prop="name">
@@ -118,7 +118,7 @@
       <el-row>
         <el-col :span="14" :offset="10">
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">提交</el-button>
+            <el-button type="primary" @click="submitForm()">提交</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -141,6 +141,14 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import { sendMainForm } from '../api';
+import { RuleItem } from 'async-validator';
+import message from 'element-plus/lib/el-message/src/message';
+
+interface CustomRuleItem extends RuleItem {
+  trigger: string;
+}
+type CustomRule = CustomRuleItem | CustomRuleItem[];
+type CustomRules = Record<string, CustomRule>;
 
 interface Form {
   name: string;
@@ -169,6 +177,40 @@ interface CopyButton {
 export default defineComponent({
   name: 'Home',
   setup() {
+    const formRules = ref<CustomRules>({
+      name: [
+        { required: true, message: '请输入昵称', trigger: 'blur' },
+        { min: 3, max: 15, message: '长度在3到15之间', trigger: 'blur' },
+      ],
+      sex: { required: true, message: '请选择性别', trigger: 'blur' },
+      blogName: [
+        { required: true, message: '请输入博客名', trigger: 'blur' },
+        { min: 3, max: 25, message: '长度在3到25之间', trigger: 'blur' },
+      ],
+      blogUrl: [
+        { required: true, message: '请输入博客地址', trigger: 'blur' },
+        {
+          pattern: /^(((ht|f)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/,
+          message: '请输入网址',
+          trigger: 'change',
+        },
+        { max: 60, message: '长度小于60个字符', trigger: 'blur' },
+      ],
+      qq: [
+        { required: true, message: '请输入QQ', trigger: 'blur' },
+        { type: 'number', message: '请输入合法的QQ帐号', trigger: 'change' },
+        { min: 7, max: 20, message: '长度在7到20之间', trigger: 'blur' },
+      ],
+      email: [
+        { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+        { type: 'email', message: '请输入合法的邮箱地址', trigger: 'change' },
+        { min: 3, max: 30, message: '长度在3到30之间', trigger: 'blur' },
+      ],
+      grade: { required: true, message: '请选择年级', trigger: 'blur' },
+      github: { max: 30, message: '长度在30个字符内', trigger: 'change' },
+      devStack: { max: 50, message: '长度在50个字符内', trigger: 'change' },
+    });
+    const mainFormRef = ref<any>(null);
     const mainForm = ref<Form>({
       name: '',
       sex: null,
@@ -205,25 +247,32 @@ export default defineComponent({
       }
     );
     // 提交表单
-    const onSubmit = async () => {
-      const {
-        data: { receipt_key },
-      } = await sendMainForm({
-        name: mainForm.value.name,
-        sex: mainForm.value.sex,
-        blog_name: mainForm.value.blogName,
-        blog_url: mainForm.value.blogUrl,
-        qq: mainForm.value.qq,
-        email: mainForm.value.email,
-        is_student: mainForm.value.isStudent,
-        grade: mainForm.value.grade,
-        do_dev: mainForm.value.doDev,
-        github: mainForm.value.github,
-        dev_stack: mainForm.value.devStack,
+    const submitForm = async () => {
+      mainFormRef.value.validate((valid: unknown) => {
+        if (valid) {
+          console.log('submit');
+        } else {
+          console.log('error!');
+        }
       });
-      // 显示弹窗
-      dialog.value.content = receipt_key;
-      dialog.value.visible = true;
+      // const {
+      //   data: { receipt_key },
+      // } = await sendMainForm({
+      //   name: mainForm.value.name,
+      //   sex: mainForm.value.sex,
+      //   blog_name: mainForm.value.blogName,
+      //   blog_url: mainForm.value.blogUrl,
+      //   qq: mainForm.value.qq,
+      //   email: mainForm.value.email,
+      //   is_student: mainForm.value.isStudent,
+      //   grade: mainForm.value.grade,
+      //   do_dev: mainForm.value.doDev,
+      //   github: mainForm.value.github,
+      //   dev_stack: mainForm.value.devStack,
+      // });
+      // // 显示弹窗
+      // dialog.value.content = receipt_key;
+      // dialog.value.visible = true;
     };
     // 一键复制回执Key
     const copyReceiptKey = async () => {
@@ -235,7 +284,7 @@ export default defineComponent({
     const reloadPage = () => {
       location.reload();
     };
-    return { mainForm, gradeAvailable, onSubmit, dialog, copyButton, copyReceiptKey, reloadPage };
+    return { formRules, mainFormRef, mainForm, gradeAvailable, submitForm, dialog, copyButton, copyReceiptKey, reloadPage };
   },
 });
 </script>
