@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "buildf": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
