@@ -81,17 +81,7 @@
         <el-col :span="8">
           <el-form-item label="年级" prop="grade">
             <el-select v-model="mainForm.grade" placeholder="请选择" :disabled="!gradeAvailable">
-              <el-option :value="0" label="初一"> </el-option>
-              <el-option :value="1" label="初二"> </el-option>
-              <el-option :value="2" label="初三"> </el-option>
-              <el-option :value="3" label="高一"> </el-option>
-              <el-option :value="4" label="高二"> </el-option>
-              <el-option :value="5" label="高三"> </el-option>
-              <el-option :value="6" label="大一"> </el-option>
-              <el-option :value="7" label="大二"> </el-option>
-              <el-option :value="8" label="大三"> </el-option>
-              <el-option :value="9" label="大四"> </el-option>
-              <el-option :value="10" label="其他"> </el-option>
+              <el-option v-for="item in gradeOptions" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -142,7 +132,12 @@
 import { defineComponent, ref, watch } from 'vue';
 import { sendMainForm } from '../api';
 import { RuleItem } from 'async-validator';
-import message from 'element-plus/lib/el-message/src/message';
+
+interface gradeOption {
+  value: number;
+  label: string;
+}
+type gradeOptions = gradeOption[];
 
 interface CustomRuleItem extends RuleItem {
   trigger: string;
@@ -177,6 +172,20 @@ interface CopyButton {
 export default defineComponent({
   name: 'Home',
   setup() {
+    // 动态生成年级选择器
+    const gradeOptions = ref<gradeOptions>([
+      { value: 0, label: '初一' },
+      { value: 1, label: '初二' },
+      { value: 2, label: '初三' },
+      { value: 3, label: '高一' },
+      { value: 4, label: '高二' },
+      { value: 5, label: '高三' },
+      { value: 6, label: '大一' },
+      { value: 7, label: '大二' },
+      { value: 8, label: '大三' },
+      { value: 9, label: '大四' },
+      { value: 10, label: '其他' },
+    ]);
     const formRules = ref<CustomRules>({
       name: [
         { required: true, message: '请输入昵称', trigger: 'blur' },
@@ -281,7 +290,18 @@ export default defineComponent({
     const reloadPage = () => {
       location.reload();
     };
-    return { formRules, mainFormRef, mainForm, gradeAvailable, submitForm, dialog, copyButton, copyReceiptKey, reloadPage };
+    return {
+      formRules,
+      mainFormRef,
+      mainForm,
+      gradeAvailable,
+      submitForm,
+      dialog,
+      copyButton,
+      copyReceiptKey,
+      reloadPage,
+      gradeOptions,
+    };
   },
 });
 </script>
