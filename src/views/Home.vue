@@ -213,7 +213,7 @@ export default defineComponent({
       email: [
         { required: true, message: '请输入邮箱地址', trigger: 'blur' },
         { type: 'email', message: '请输入合法的邮箱地址', trigger: 'change' },
-        { min: 3, max: 30, message: '长度在3到30之间', trigger: 'blur' },
+        { min: 3, max: 50, message: '长度在3到50之间', trigger: 'blur' },
       ],
       grade: { required: true, message: '请选择年级', trigger: 'change' },
       github: { max: 30, message: '长度在30个字符内', trigger: 'change' },
