@@ -8,4 +8,3 @@ const app = createApp(App);
 app.use(router);
 app.use(ElementPlus);
 app.mount('#app');
-document.title = '学生博客联盟注册页';
