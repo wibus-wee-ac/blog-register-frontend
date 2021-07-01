@@ -199,8 +199,8 @@ export default defineComponent({
       blogUrl: [
         { required: true, message: '请输入博客地址', trigger: 'blur' },
         {
-          pattern: /^(((ht|f)tps):\/\/)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/,
-          message: '请输入网址(务必添加https协议头)',
+          pattern: /^(((ht|f)tps):\/\/)[\w-]+(\.[\w-]+)$/,
+          message: '请输入网址(务必添加 https 协议头 , 结尾勿添加 / )',
           trigger: 'change',
         },
         { max: 60, message: '长度小于60个字符', trigger: 'blur' },
