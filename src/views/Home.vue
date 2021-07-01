@@ -199,7 +199,7 @@ export default defineComponent({
       blogUrl: [
         { required: true, message: '请输入博客地址', trigger: 'blur' },
         {
-          pattern: /^(((ht|f)tps):\/\/)[\w-]+(\.[\w-]+)$/,
+          pattern: /^https:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]+$/,
           message: '请输入网址(务必添加 https 协议头 , 结尾勿添加 / )',
           trigger: 'change',
         },
