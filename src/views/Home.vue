@@ -36,12 +36,12 @@
     </template>
     <el-form :model="mainForm" ref="mainFormRef" :rules="formRules">
       <el-row :gutter="10">
-        <el-col :span="20">
+        <el-col :span="20" :xs="24">
           <el-form-item label="昵称" prop="name">
             <el-input v-model="mainForm.name"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="4" :xs="24">
           <el-form-item label="性别" prop="sex">
             <el-radio v-model="mainForm.sex" label="false">男</el-radio>
             <el-radio v-model="mainForm.sex" label="true">女</el-radio>
@@ -49,43 +49,43 @@
         </el-col>
       </el-row>
       <el-row :gutter="10">
-        <el-col :span="6">
+        <el-col :span="6" :xs="24">
           <el-form-item label="博客名" prop="blogName">
             <el-input v-model="mainForm.blogName"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="18">
+        <el-col :span="18" :xs="24">
           <el-form-item label="博客地址" prop="blogUrl">
             <el-input v-model="mainForm.blogUrl"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="10">
-        <el-col :span="12">
+        <el-col :span="12" :xs="24">
           <el-form-item label="QQ" prop="qq">
             <el-input v-model="mainForm.qq"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" :xs="24">
           <el-form-item label="Email" prop="email">
             <el-input v-model="mainForm.email"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="4">
+        <el-col :span="4" :xs="24">
           <el-form-item label="是否学生" prop="isStudent">
             <el-switch v-model="mainForm.isStudent"></el-switch>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" :xs="24">
           <el-form-item label="年级" prop="grade">
             <el-select v-model="mainForm.grade" placeholder="请选择" :disabled="!gradeAvailable">
               <el-option v-for="item in gradeOptions" :key="item.value" :label="item.label" :value="item.value"> </el-option>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="10" :xs="24">
           <el-form-item label="参与开发" prop="doDev">
             <el-switch v-model="mainForm.doDev"></el-switch>
           </el-form-item>
@@ -93,12 +93,12 @@
       </el-row>
       <el-collapse-transition>
         <el-row :gutter="10" v-show="mainForm.doDev">
-          <el-col :span="6">
+          <el-col :span="6" :xs="24">
             <el-form-item label="Github用户名" prop="github">
               <el-input v-model="mainForm.github"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="18" :xs="24">
             <el-form-item label="技术栈" prop="devStack">
               <el-input v-model="mainForm.devStack" placeholder="例如: python , php , javascript , c++ , java..."></el-input>
             </el-form-item>
