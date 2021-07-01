@@ -5,6 +5,7 @@
 
 ## Todo List
 
-- [ ] 换个组件库吧 , 这个 Element Plus 没响应式 , Bug 一堆
+- [ ] 换个组件库吧 , Element Plus 的 bug 一堆
 - [ ] 加页头 Header 包括 Logo 和标题
 - [ ] 加页脚 Footer
+- [ ] 审核后台
