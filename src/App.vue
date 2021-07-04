@@ -39,7 +39,9 @@
     <el-main>
       <router-view />
     </el-main>
-    <Footer />
+    <el-footer>
+      <Footer />
+    </el-footer>
   </el-container>
 </template>
 
